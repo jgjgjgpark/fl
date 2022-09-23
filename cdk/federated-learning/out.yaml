@@ -1,0 +1,418 @@
+Resources:
+  org1vpc6CF744B0:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/Resource
+  org1vpcPublicSubnet1Subnet9728F292:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.1.0.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet1/Subnet
+  org1vpcPublicSubnet1RouteTable683417C6:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet1/RouteTable
+  org1vpcPublicSubnet1RouteTableAssociationFD1282B8:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: org1vpcPublicSubnet1RouteTable683417C6
+      SubnetId:
+        Ref: org1vpcPublicSubnet1Subnet9728F292
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet1/RouteTableAssociation
+  org1vpcPublicSubnet1DefaultRoute37F9F8A0:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: org1vpcPublicSubnet1RouteTable683417C6
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: org1vpcIGW2BB51FBA
+    DependsOn:
+      - org1vpcVPCGWEF62BC0B
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet1/DefaultRoute
+  org1vpcPublicSubnet2SubnetBA8376B6:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      CidrBlock: 10.1.64.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet2/Subnet
+  org1vpcPublicSubnet2RouteTableDFA66D1D:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet2/RouteTable
+  org1vpcPublicSubnet2RouteTableAssociation2EEDCE53:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: org1vpcPublicSubnet2RouteTableDFA66D1D
+      SubnetId:
+        Ref: org1vpcPublicSubnet2SubnetBA8376B6
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet2/RouteTableAssociation
+  org1vpcPublicSubnet2DefaultRoute8C445013:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: org1vpcPublicSubnet2RouteTableDFA66D1D
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: org1vpcIGW2BB51FBA
+    DependsOn:
+      - org1vpcVPCGWEF62BC0B
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/PublicSubnet2/DefaultRoute
+  org1vpcIsolatedSubnet1Subnet03C463B9:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.1.128.0/18
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Isolated
+        - Key: aws-cdk:subnet-type
+          Value: Isolated
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/IsolatedSubnet1
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet1/Subnet
+  org1vpcIsolatedSubnet1RouteTable65B19EE2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/IsolatedSubnet1
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet1/RouteTable
+  org1vpcIsolatedSubnet1RouteTableAssociationCA6D121E:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: org1vpcIsolatedSubnet1RouteTable65B19EE2
+      SubnetId:
+        Ref: org1vpcIsolatedSubnet1Subnet03C463B9
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet1/RouteTableAssociation
+  org1vpcIsolatedSubnet2Subnet221E82A4:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      CidrBlock: 10.1.192.0/18
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Isolated
+        - Key: aws-cdk:subnet-type
+          Value: Isolated
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/IsolatedSubnet2
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet2/Subnet
+  org1vpcIsolatedSubnet2RouteTable29DCE17A:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc/IsolatedSubnet2
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet2/RouteTable
+  org1vpcIsolatedSubnet2RouteTableAssociation2CDFFC5B:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: org1vpcIsolatedSubnet2RouteTable29DCE17A
+      SubnetId:
+        Ref: org1vpcIsolatedSubnet2Subnet221E82A4
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IsolatedSubnet2/RouteTableAssociation
+  org1vpcIGW2BB51FBA:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/org1-vpc
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/IGW
+  org1vpcVPCGWEF62BC0B:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: org1vpc6CF744B0
+      InternetGatewayId:
+        Ref: org1vpcIGW2BB51FBA
+    Metadata:
+      aws:cdk:path: Organization1Stack/org1-vpc/VPCGW
+  websq27EE1056:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Organization1Stack/web_sq
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          Description: allow http traffic
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0
+          Description: allow ssh traffic
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+      VpcId:
+        Ref: org1vpc6CF744B0
+    Metadata:
+      aws:cdk:path: Organization1Stack/web_sq/Resource
+  instanceInstanceRoleF436EE92:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                Fn::Join:
+                  - ""
+                  - - ec2.
+                    - Ref: AWS::URLSuffix
+        Version: "2012-10-17"
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/instance
+    Metadata:
+      aws:cdk:path: Organization1Stack/instance/InstanceRole/Resource
+  instanceInstanceProfile931F14E3:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - Ref: instanceInstanceRoleF436EE92
+    Metadata:
+      aws:cdk:path: Organization1Stack/instance/InstanceProfile
+  instanceB7CCE687:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      IamInstanceProfile:
+        Ref: instanceInstanceProfile931F14E3
+      ImageId:
+        Ref: SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter
+      InstanceType: t2.micro
+      KeyName: federated
+      SecurityGroupIds:
+        - Fn::GetAtt:
+            - websq27EE1056
+            - GroupId
+      SubnetId:
+        Ref: org1vpcPublicSubnet1Subnet9728F292
+      Tags:
+        - Key: Name
+          Value: Organization1Stack/instance
+      UserData:
+        Fn::Base64: |+
+          #!/bin/bash
+          #!/bin/bash -ex
+          # install nginx on Amazon linux Image2
+          sudo amazon-linux-extras install -y nginx1
+
+          ## install uwsgi server
+          #sudo yum -y install gcc
+          #pip3 install uwsgi
+          #
+          ## download and setup app
+          #mkdir /feedernet
+          #cd /feedernet
+          #aws s3 cp s3://bucket/deploy-app.zip .
+          #unip deploy-app.zip
+          #pip3 install -r FlaskApp/requirements.txt
+          #
+          ## copy nginx config
+          #mv -f Deploy/nginx.conf /etc/nginx/nginx.conf
+          ## configure upstart to run uwsgi
+          #mv -f Deploy/uwsgi.conf /etc/init/uwsgi.conf
+          #start uwsgi
+
+          # switch on nginx and configure to autostart
+          sudo systemctl enable nginx
+          sudo systemctl start nginx
+          mkdir feedernet
+          cd feedernet
+          aws s3 cp s3://federated-learning-bucket/org_api_server/deploy-app.zip .
+          unzip deploy-app.zip
+
+    DependsOn:
+      - instanceInstanceRoleF436EE92
+    Metadata:
+      aws:cdk:path: Organization1Stack/instance/Resource
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/1WPTW/CMAyGfwv3NBvVxB31gLhF7cQVuanRDK2DEgeEqv53AoF1O/n146/XpS5X+nMB11DY7lT01OqxEbAnldB+RFvqcXe2qjrwzlTKxLYn28SWUR5sVrWLgt/Q9jjzma1DcJZAyPFvszKeLiA479iyoE96k+gVbq+jr2wtydbPgCyqQRs9yW3jXTw/z/0DWw4CbDGvzHpSBIMea5f9veO7bLw7UI/TpGoMLvo8bMDDgMnTc+RPoXLc0eOZSbHrUB/Dx2W50ssvXS6OgajwkYUG1HWOdxUkM61mAQAA
+    Metadata:
+      aws:cdk:path: Organization1Stack/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Parameters:
+  SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+

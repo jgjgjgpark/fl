@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor Jupyter
+participant FederatedLearning
+participant RoundExecution
+collections Execution
+participant FeedernetAPI
+
+
+Jupyter -> FederatedLearning: new
+Jupyter -> FederatedLearning: execute
+FederatedLearning -> RoundExecution: execute
+RoundExecution -> Execution: new with cdmId's
+RoundExecution -> RoundExecution: _load_global_weight()
+RoundExecution -> RoundExecution: _upload_analysis_file()
+loop cdmIds
+RoundExecution -> Execution: execute
+end
+RoundExecution -> RoundExecution: _update_status()
+
+loop until learning_status == finished(fail or success)
+    loop executions
+        RoundExecution -> Execution: get_status()
+        Execution -> FeedernetAPI: get_status()
+        RoundExecution -> RoundExecution: set_status()
+    end
+end
+
+alt learning is successful
+RoundExecution -> RoundExecution: _update_global_weight()
+end
+
+loop cdmIds
+RoundExecution -> Execution: stop
+end
+
+Execution -> FeedernetAPI: run
+Jupyter -> FederatedLearning: getStatus
+FederatedLearning -> RoundExecution: getStatus
+RoundExecution -> Execution: getStatus
+Execution -> FeedernetAPI: getStatus
+@enduml

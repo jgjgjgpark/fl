@@ -1,0 +1,53 @@
+@startuml
+
+autonumber
+actor AggregationServer
+
+AggregationServer -> Fl_Server: createAnalysis()
+activate Fl_Server
+return analysisId
+AggregationServer -> Fl_Server: getPresignedUrl4Upload()
+activate Fl_Server
+return presigned_url
+AggregationServer -> AWS_S3: uploadFile()
+activate AWS_S3
+return "ok"
+AWS_S3 -> S3EventListener: analysisUploaded()
+activate S3EventListener
+S3EventListener -> OrgServer1: executeAnalysis()
+activate OrgServer1
+return "ok"
+S3EventListener -> OrgServer2: executeAnalysis()
+activate OrgServer2
+return "ok"
+return "ok"
+
+OrgServer1 -> AWS_S3: uploadResult()
+activate AWS_S3
+return "ok"
+AWS_S3 -> S3EventListener:resultUploaded()
+activate S3EventListener
+S3EventListener -> db: updateState()
+activate db
+return "ok"
+return "ok"
+
+OrgServer2 -> AWS_S3: uploadResult()
+activate AWS_S3
+return "ok"
+AWS_S3 -> S3EventListener:resultUploaded()
+activate S3EventListener
+S3EventListener -> db: updateState()
+activate db
+return "ok"
+return "ok"
+
+
+
+AggregationServer -> Fl_Server: checkState()
+activate Fl_Server
+Fl_Server -> db: queryState
+activate db
+return queryResult
+return "completed"
+@enduml

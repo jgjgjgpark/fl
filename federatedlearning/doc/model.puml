@@ -1,0 +1,4 @@
+@startuml
+FederatedLearning "1" - "*" RoundExecution
+RoundExecution "1" - "*" Execution
+@enduml

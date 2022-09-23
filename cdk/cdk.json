@@ -1,0 +1,3 @@
+{
+  "app": "npx infrastructure/Launcher.ts"
+}

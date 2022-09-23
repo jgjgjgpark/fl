@@ -1,0 +1,128 @@
+API_UPDATE : RESULT :
+{
+  'data': {
+    'ok': 1
+  },
+  'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJscG0iOjE1OTg0ODU0MzQwNDMsInRzIjoxNjI3NDU5MTc5MDg1LCJpYXQiOjE2Mjc0NTkxNzh9.3rsA_e3KMoL7kmsXXziGwlrcigZdcMIoJu70PL4O65A'
+}
+
+
+API_RUN : RESULT :  
+{
+  'data': {
+    'execution': {
+      'id': 1359,
+      'analysisId': 86,
+      'createdAt': '2021-07-28T07:40:11.000Z',
+      'executionStatus': 9,
+      'executionStatusLast': None,
+      'uidCreator': 23,
+      'cdmId': 4,
+      'token': 'b42bf99c45e240788fe0b12f70a5495119c8f2a778b145f39eec1a56c895',
+      'researchType': 4,
+      'updatedAt': '2021-07-28T07:40:10.000Z',
+      'rVersion': 'custom',
+      'clientId': None,
+      'containerId': None,
+      'startedAt': None,
+      'endedAt': None,
+      'errorMessage': None,
+      'resourceUsage': None,
+      'numOutputFiles': 0,
+      'name': 'M/L Tensorflow Analysis Test',
+      'engineVer': '0.2.1',
+      'atlasVersion': None
+    }
+  },
+  'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJscG0iOjE1OTg0ODU0MzQwNDMsInRzIjoxNjI3NDU4MDEwNDY2LCJpYXQiOjE2Mjc0NTgwMDl9.DnUjvCfqTzMoMBEOeUUKiiUn5NY5GRhT2V6Tlw1B_Ig'
+}
+
+API_RUN_STATUS : RESULT :  
+{
+  'data': {
+    'execution': {
+      'id': 1356,
+      'analysisId': 86,
+      'createdAt': '2021-07-28T05:50:03.000Z',
+      'executionStatus': 20,
+      'executionStatusLast': None,
+      'uidCreator': 23,
+      'cdmId': 6,
+      'token': '86b4cc238ffb4555b5661a234a20560a83c1042a4f9e45f88daaaa454c19',
+      'researchType': 4,
+      'updatedAt': '2021-07-28T05:50:03.000Z',
+      'rVersion': 'custom',
+      'clientId': '3600',
+      'containerId': None,
+      'startedAt': '2021-07-28T05:50:22.000Z',
+      'endedAt': '2021-07-28T05:50:34.000Z',
+      'errorMessage': None,
+      'resourceUsage': None,
+      'numOutputFiles': 1,
+      'name': 'M/L Tensorflow Analysis Test',
+      'engineVer': '2.5.0',
+      'atlasVersion': 'ml'
+    },
+    'files': [
+      {
+        'id': 'e3796eacba84a20f355b7a9a2fb9c652',
+        'version': 63,
+        'fileName': 'run_0.zip',
+        'mimeType': 'application/zip',
+        'analysisId': 86,
+        'fileId': '0bf4d6d2-4025-4000-b6ce-58bc69394ad9',
+        'sha1': '03638c03aa640df626286167063890e9737e70af',
+        'createdAt': '2021-07-28T05:50:01.000Z',
+        'deletedAt': None,
+        'archived': 1,
+        'containerParam': None
+      }
+    ],
+    'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZXMiOlsiU2NvcGVBY2Nlc3NBbmFseXNpc0ZpbGUiXSwiY3JlYXRlZEF0IjoxNjI3NDU4MzcxMjE0LCJtYXhBbGl2ZSI6MzYwMDAwMCwiZGF0YSI6eyJhbmFseXNpc0lkIjo4Nn0sImlhdCI6MTYyNzQ1ODM3MX0.fspB8YCPfBUsHw6l9dgcjogRXUsaxnYE73ISb8veMD4',
+    'cdm': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoiMjAzLjI0NS4yLjE5OSIsInVzZXIiOiJkYmFkbWluIiwicGFzc3dvcmQiOiJJTklUQDEyMzQiLCJkYXRhYmFzZSI6Im9tb3AiLCJzY2hlbWEiOiJjZG1fc3lucHVmIiwiY29ob3J0VGFibGUiOiJjb2hvcnQiLCJjZG1WZXJzaW9uIjoiNS4zLjAiLCJwb3J0Ijo1NDMyLCJpYXQiOjE2Mjc0NTgzNzF9.k5Bjaq7gVIfkKvwKdoRXqgW694sGsn9yw_liHxivlxs'
+  },
+  'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJscG0iOjE1OTg0ODU0MzQwNDMsInRzIjoxNjI3NDU4MzcxMTcyLCJpYXQiOjE2Mjc0NTgzNzB9.2a5lYFFmRi4JHMpi4A11oVFkdvsueP58nzQBrLpyBgU'
+}
+
+API_GET_RESULT_LIST : RESULT :  
+{
+  'data': {
+    'list': [
+      {
+        'id': 'f2354380-9741-46d9-8ac1-9dae9f50dc4c',
+        'fileName': 'result.zip/data/results/log.txt',
+        'mimeType': 'text/plain',
+        'createdAt': '2021-07-28T05:50:34.000Z',
+        'deletedAt': None,
+        'sha1': 'a893555d6c4857f2bf15a2b0e38146f5e5c8b19f',
+        'executionId': 1356,
+        'resultFileType': 2
+      },
+      {
+        'id': '372bffb1-71c7-4e31-b567-175a2ff50ce8',
+        'fileName': 'result.zip',
+        'mimeType': 'application/zip',
+        'createdAt': '2021-07-28T05:50:33.000Z',
+        'deletedAt': None,
+        'sha1': 'c4f7f9cc1fbe495970abca6747ada76620e61c90',
+        'executionId': 1356,
+        'resultFileType': 1
+      },
+      {
+        'id': '3de60195-9771-436d-b234-ee1276a68287',
+        'fileName': 'result.zip/data/results/record.txt',
+        'mimeType': 'text/plain',
+        'createdAt': '2021-07-28T05:50:33.000Z',
+        'deletedAt': None,
+        'sha1': 'bce862043e401fafc42cae2843ab7bad6997585b',
+        'executionId': 1356,
+        'resultFileType': 2
+      }
+    ],
+    'page': 1,
+    'pageSize': 30,
+    'totalCount': 3
+  },
+  'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIzLCJscG0iOjE1OTg0ODU0MzQwNDMsInRzIjoxNjI3NDU4MzcxNDQxLCJpYXQiOjE2Mjc0NTgzNzB9.zi0uqmThijhIo9GNZRNOBpb5lX-WKJngLAuPKUkPFJo'
+}
+

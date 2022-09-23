@@ -1,0 +1,35 @@
+{
+  "name": "federated-learning",
+  "version": "0.1.0",
+  "bin": {
+    "federated-learning": "bin/federated-learning.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.101",
+    "@types/jest": "^27.5.0",
+    "@types/node": "10.17.27",
+    "@types/prettier": "2.6.0",
+    "aws-cdk": "2.26.0",
+    "esbuild": "^0.14.47",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.121.0",
+    "@aws-sdk/s3-request-presigner": "^3.121.0",
+    "@types/uuid": "^8.3.4",
+    "aws-cdk-lib": "2.26.0",
+    "aws-lambda": "^1.0.7",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.21",
+    "uuid": "^8.3.2"
+  }
+}

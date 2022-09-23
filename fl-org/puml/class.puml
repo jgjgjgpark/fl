@@ -1,0 +1,45 @@
+@startuml
+User - "*" Analysis
+Organization "1" -"*" CDM
+Analysis -- "*" CDM
+Analysis - "*" Execution
+Execution -- "1" CDM
+
+class User {
+  id: String
+}
+
+class Execution {
+  round: int
+  status: Completed|Running|Error
+  CDM cdm
+  message: String
+}
+
+class Organization {
+  id: String
+  name: String
+  url: String
+}
+
+class Analysis {
+  id: String
+  status: Ready|Completed|Running|Error
+  currentRound: int
+  List<CDM> cdms
+  user: String
+  message: String
+}
+
+
+class CDM {
+  id: String
+  description: String
+  status: ON|OFF
+}
+
+
+
+
+
+@enduml

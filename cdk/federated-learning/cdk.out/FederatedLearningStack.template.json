@@ -1,0 +1,1960 @@
+{
+ "Resources": {
+  "federatedlearningtable3D56D623": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "KeySchema": [
+     {
+      "AttributeName": "PK",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "SK",
+      "KeyType": "RANGE"
+     }
+    ],
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "SK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "GSI1PK",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "GSI1SK",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "GlobalSecondaryIndexes": [
+     {
+      "IndexName": "globalIndex1",
+      "KeySchema": [
+       {
+        "AttributeName": "PK",
+        "KeyType": "HASH"
+       },
+       {
+        "AttributeName": "SK",
+        "KeyType": "RANGE"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "ALL"
+      }
+     },
+     {
+      "IndexName": "globalIndex2",
+      "KeySchema": [
+       {
+        "AttributeName": "GSI1PK",
+        "KeyType": "HASH"
+       },
+       {
+        "AttributeName": "GSI1SK",
+        "KeyType": "RANGE"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "ALL"
+      }
+     }
+    ],
+    "TableName": "federated-learning-table"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/federated-learning-table/Resource"
+   }
+  },
+  "flapiB2127466": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Name": "fl-api"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Resource"
+   }
+  },
+  "flapiCloudWatchRoleB0C6D8EA": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/CloudWatchRole/Resource"
+   }
+  },
+  "flapiAccountEFD6CCC9": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "flapiCloudWatchRoleB0C6D8EA",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "flapiB2127466"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Account"
+   }
+  },
+  "flapiDeploymentC545BF66a6d9fa25b4fd6d3ee5725da8e79f0fb5": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "Description": "Automatically created by the RestApi construct"
+   },
+   "DependsOn": [
+    "flapianalysesanalysisIdpredefinedurlGETDE57AD70",
+    "flapianalysesanalysisIdpredefinedurl99AA55EF",
+    "flapianalysesanalysisIdCEACF21F",
+    "flapianalysesanalysisIdroundsroundPUTF3EC6EA7",
+    "flapianalysesanalysisIdroundsround4EFD3528",
+    "flapianalysesanalysisIdroundsD7E5C413",
+    "flapianalysesPOSTE1F56FB0",
+    "flapianalysesB438150A",
+    "flapicdmsGETD427C0AA",
+    "flapicdmsEE861973",
+    "flapiorganizationsorgIdGET79C03B3F",
+    "flapiorganizationsorgIdD0720241",
+    "flapiorganizationsGET5617CCFA",
+    "flapiorganizations18C45D86"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Deployment/Resource"
+   }
+  },
+  "flapiDeploymentStageprodF6A989F9": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "DeploymentId": {
+     "Ref": "flapiDeploymentC545BF66a6d9fa25b4fd6d3ee5725da8e79f0fb5"
+    },
+    "StageName": "prod"
+   },
+   "DependsOn": [
+    "flapiAccountEFD6CCC9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/DeploymentStage.prod/Resource"
+   }
+  },
+  "flapiorganizations18C45D86": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "flapiB2127466",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "organizations",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/Resource"
+   }
+  },
+  "flapiorganizationsGETApiPermissionFederatedLearningStackflapiB15B2DA1GETorganizations30D31B9D": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "organizationlambdaBFBF175B",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/GET/organizations"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..organizations"
+   }
+  },
+  "flapiorganizationsGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETorganizationsD8A7657C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "organizationlambdaBFBF175B",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/GET/organizations"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..organizations"
+   }
+  },
+  "flapiorganizationsGET5617CCFA": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "flapiorganizations18C45D86"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "organizationlambdaBFBF175B",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/GET/Resource"
+   }
+  },
+  "flapiorganizationsorgIdD0720241": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "flapiorganizations18C45D86"
+    },
+    "PathPart": "{orgId}",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/{orgId}/Resource"
+   }
+  },
+  "flapiorganizationsorgIdGETApiPermissionFederatedLearningStackflapiB15B2DA1GETorganizationsorgId2064A4F5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "organizationlambdaBFBF175B",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/GET/organizations/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..organizations.{orgId}"
+   }
+  },
+  "flapiorganizationsorgIdGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETorganizationsorgId0B22B3C1": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "organizationlambdaBFBF175B",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/GET/organizations/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..organizations.{orgId}"
+   }
+  },
+  "flapiorganizationsorgIdGET79C03B3F": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "flapiorganizationsorgIdD0720241"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "organizationlambdaBFBF175B",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/Resource"
+   }
+  },
+  "flapianalysesB438150A": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "flapiB2127466",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "analyses",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/Resource"
+   }
+  },
+  "flapianalysesPOSTApiPermissionFederatedLearningStackflapiB15B2DA1POSTanalyses1D765F91": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "analysislambdaDFBB211D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/POST/analyses"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/POST/ApiPermission.FederatedLearningStackflapiB15B2DA1.POST..analyses"
+   }
+  },
+  "flapianalysesPOSTApiPermissionTestFederatedLearningStackflapiB15B2DA1POSTanalyses4065595C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "analysislambdaDFBB211D",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/POST/analyses"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/POST/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.POST..analyses"
+   }
+  },
+  "flapianalysesPOSTE1F56FB0": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "POST",
+    "ResourceId": {
+     "Ref": "flapianalysesB438150A"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "analysislambdaDFBB211D",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/POST/Resource"
+   }
+  },
+  "flapianalysesanalysisIdCEACF21F": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "flapianalysesB438150A"
+    },
+    "PathPart": "{analysisId}",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/Resource"
+   }
+  },
+  "flapianalysesanalysisIdpredefinedurl99AA55EF": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "flapianalysesanalysisIdCEACF21F"
+    },
+    "PathPart": "predefined_url",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/Resource"
+   }
+  },
+  "flapianalysesanalysisIdpredefinedurlGETApiPermissionFederatedLearningStackflapiB15B2DA1GETanalysesanalysisIdpredefinedurl5620E38A": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "presignedurllambdaD5DC181C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/GET/analyses/*/predefined_url"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..analyses.{analysisId}.predefined_url"
+   }
+  },
+  "flapianalysesanalysisIdpredefinedurlGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETanalysesanalysisIdpredefinedurl26EDE781": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "presignedurllambdaD5DC181C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/GET/analyses/*/predefined_url"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..analyses.{analysisId}.predefined_url"
+   }
+  },
+  "flapianalysesanalysisIdpredefinedurlGETDE57AD70": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "flapianalysesanalysisIdpredefinedurl99AA55EF"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "presignedurllambdaD5DC181C",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestParameters": {
+     "method.request.querystring.round": true
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/Resource"
+   }
+  },
+  "flapianalysesanalysisIdroundsD7E5C413": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "flapianalysesanalysisIdCEACF21F"
+    },
+    "PathPart": "rounds",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/Resource"
+   }
+  },
+  "flapianalysesanalysisIdroundsround4EFD3528": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "flapianalysesanalysisIdroundsD7E5C413"
+    },
+    "PathPart": "{round}",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/Resource"
+   }
+  },
+  "flapianalysesanalysisIdroundsroundPUTApiPermissionFederatedLearningStackflapiB15B2DA1PUTanalysesanalysisIdroundsround93069E04": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "executionlambda813DBCF9",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/PUT/analyses/*/rounds/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/ApiPermission.FederatedLearningStackflapiB15B2DA1.PUT..analyses.{analysisId}.rounds.{round}"
+   }
+  },
+  "flapianalysesanalysisIdroundsroundPUTApiPermissionTestFederatedLearningStackflapiB15B2DA1PUTanalysesanalysisIdroundsround95EC59C6": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "executionlambda813DBCF9",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/PUT/analyses/*/rounds/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.PUT..analyses.{analysisId}.rounds.{round}"
+   }
+  },
+  "flapianalysesanalysisIdroundsroundPUTF3EC6EA7": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "PUT",
+    "ResourceId": {
+     "Ref": "flapianalysesanalysisIdroundsround4EFD3528"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "executionlambda813DBCF9",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/Resource"
+   }
+  },
+  "flapicdmsEE861973": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "flapiB2127466",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "cdms",
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/cdms/Resource"
+   }
+  },
+  "flapicdmsGETApiPermissionFederatedLearningStackflapiB15B2DA1GETcdms5E89CB85": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "cdmlambdaC139B89A",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/",
+       {
+        "Ref": "flapiDeploymentStageprodF6A989F9"
+       },
+       "/GET/cdms"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/cdms/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..cdms"
+   }
+  },
+  "flapicdmsGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETcdms7DC7AC44": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "cdmlambdaC139B89A",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:ap-northeast-2:",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "flapiB2127466"
+       },
+       "/test-invoke-stage/GET/cdms"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/cdms/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..cdms"
+   }
+  },
+  "flapicdmsGETD427C0AA": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "flapicdmsEE861973"
+    },
+    "RestApiId": {
+     "Ref": "flapiB2127466"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:ap-northeast-2:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "cdmlambdaC139B89A",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/fl-api/Default/cdms/GET/Resource"
+   }
+  },
+  "organizationlambdaServiceRoleC50F2A42": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/organization-lambda/ServiceRole/Resource"
+   }
+  },
+  "organizationlambdaServiceRoleDefaultPolicy6FA351E4": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "organizationlambdaServiceRoleDefaultPolicy6FA351E4",
+    "Roles": [
+     {
+      "Ref": "organizationlambdaServiceRoleC50F2A42"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/organization-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "organizationlambdaBFBF175B": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "c32754712efdb733bf07789d985bde20d954abc5f70f2f9ce594e09132695364.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "organizationlambdaServiceRoleC50F2A42",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "organizationlambdaServiceRoleDefaultPolicy6FA351E4",
+    "organizationlambdaServiceRoleC50F2A42"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/organization-lambda/Resource",
+    "aws:asset:path": "asset.c32754712efdb733bf07789d985bde20d954abc5f70f2f9ce594e09132695364",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "analysislambdaServiceRoleE208A9BA": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/analysis-lambda/ServiceRole/Resource"
+   }
+  },
+  "analysislambdaServiceRoleDefaultPolicy77FC80C2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "analysislambdaServiceRoleDefaultPolicy77FC80C2",
+    "Roles": [
+     {
+      "Ref": "analysislambdaServiceRoleE208A9BA"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/analysis-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "analysislambdaDFBB211D": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "383ef7df438c5ccc0d9ee3f61c77f48da8921d8dfc421590ed3d8eb48ab310a6.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "analysislambdaServiceRoleE208A9BA",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "analysislambdaServiceRoleDefaultPolicy77FC80C2",
+    "analysislambdaServiceRoleE208A9BA"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/analysis-lambda/Resource",
+    "aws:asset:path": "asset.383ef7df438c5ccc0d9ee3f61c77f48da8921d8dfc421590ed3d8eb48ab310a6",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "s3fullaccessput0C9B7416": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "s3fullaccessput0C9B7416",
+    "Roles": [
+     {
+      "Ref": "presignedurllambdaServiceRole74B1D395"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/s3-full-access-put/Resource"
+   }
+  },
+  "presignedurllambdaServiceRole74B1D395": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/presigned-url-lambda/ServiceRole/Resource"
+   }
+  },
+  "presignedurllambdaServiceRoleDefaultPolicyC8BC02DF": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "presignedurllambdaServiceRoleDefaultPolicyC8BC02DF",
+    "Roles": [
+     {
+      "Ref": "presignedurllambdaServiceRole74B1D395"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/presigned-url-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "presignedurllambdaD5DC181C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "31a43cf4faa6896be31001be7d038e307e46162c9497a837ff379cb2a05f99ed.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "presignedurllambdaServiceRole74B1D395",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "presignedurllambdaServiceRoleDefaultPolicyC8BC02DF",
+    "presignedurllambdaServiceRole74B1D395"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/presigned-url-lambda/Resource",
+    "aws:asset:path": "asset.31a43cf4faa6896be31001be7d038e307e46162c9497a837ff379cb2a05f99ed",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "s3fullaccessgetBD53ED95": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Effect": "Allow",
+       "Resource": "arn:aws:s3:::*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "s3fullaccessgetBD53ED95",
+    "Roles": [
+     {
+      "Ref": "executionlambdaServiceRoleA10C6C39"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/s3-full-access-get/Resource"
+   }
+  },
+  "executionlambdaServiceRoleA10C6C39": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/execution-lambda/ServiceRole/Resource"
+   }
+  },
+  "executionlambdaServiceRoleDefaultPolicy9184FFD3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "executionlambdaServiceRoleDefaultPolicy9184FFD3",
+    "Roles": [
+     {
+      "Ref": "executionlambdaServiceRoleA10C6C39"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/execution-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "executionlambda813DBCF9": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "c80166d638bc9004555e457f3710df212817b1cca62662e317e4afaba90c8ed7.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "executionlambdaServiceRoleA10C6C39",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "executionlambdaServiceRoleDefaultPolicy9184FFD3",
+    "executionlambdaServiceRoleA10C6C39"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/execution-lambda/Resource",
+    "aws:asset:path": "asset.c80166d638bc9004555e457f3710df212817b1cca62662e317e4afaba90c8ed7",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "cdmlambdaServiceRole22DFE8C1": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/cdm-lambda/ServiceRole/Resource"
+   }
+  },
+  "cdmlambdaServiceRoleDefaultPolicyA330A82A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "cdmlambdaServiceRoleDefaultPolicyA330A82A",
+    "Roles": [
+     {
+      "Ref": "cdmlambdaServiceRole22DFE8C1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/cdm-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "cdmlambdaC139B89A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "146e3799d3ec1921686f528ef9d063f99867dddd2660263102383bde3122acc0.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "cdmlambdaServiceRole22DFE8C1",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "cdmlambdaServiceRoleDefaultPolicyA330A82A",
+    "cdmlambdaServiceRole22DFE8C1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/cdm-lambda/Resource",
+    "aws:asset:path": "asset.146e3799d3ec1921686f528ef9d063f99867dddd2660263102383bde3122acc0",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "federatedlearningbucketNotifications7D035EFA": {
+   "Type": "Custom::S3BucketNotifications",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691",
+      "Arn"
+     ]
+    },
+    "BucketName": "federated-learning-bucket",
+    "NotificationConfiguration": {
+     "LambdaFunctionConfigurations": [
+      {
+       "Events": [
+        "s3:ObjectCreated:*"
+       ],
+       "Filter": {
+        "Key": {
+         "FilterRules": [
+          {
+           "Name": "suffix",
+           "Value": ".zip"
+          }
+         ]
+        }
+       },
+       "LambdaFunctionArn": {
+        "Fn::GetAtt": [
+         "s3eventlistenerB5A05938",
+         "Arn"
+        ]
+       }
+      }
+     ]
+    },
+    "Managed": false
+   },
+   "DependsOn": [
+    "federatedlearningbucketAllowBucketNotificationsToFederatedLearningStacks3eventlistener92C454F9BAA26EB5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/federated-learning-bucket/Notifications/Resource"
+   }
+  },
+  "federatedlearningbucketAllowBucketNotificationsToFederatedLearningStacks3eventlistener92C454F9BAA26EB5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "s3eventlistenerB5A05938",
+      "Arn"
+     ]
+    },
+    "Principal": "s3.amazonaws.com",
+    "SourceAccount": {
+     "Ref": "AWS::AccountId"
+    },
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":s3:::federated-learning-bucket"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/federated-learning-bucket/AllowBucketNotificationsToFederatedLearningStacks3eventlistener92C454F9"
+   }
+  },
+  "s3eventlistenerServiceRoleED79F812": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/s3-event-listener/ServiceRole/Resource"
+   }
+  },
+  "s3eventlistenerServiceRoleDefaultPolicy4B42F0D4": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:*",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "federatedlearningtable3D56D623",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "federatedlearningtable3D56D623",
+             "Arn"
+            ]
+           },
+           "/index/*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "s3eventlistenerServiceRoleDefaultPolicy4B42F0D4",
+    "Roles": [
+     {
+      "Ref": "s3eventlistenerServiceRoleED79F812"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/s3-event-listener/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "s3eventlistenerB5A05938": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2"
+     },
+     "S3Key": "d504cdcdb114fca5d11981347d38a84b9a929fd86649e8d1c4f2ae802b3ae322.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "s3eventlistenerServiceRoleED79F812",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x"
+   },
+   "DependsOn": [
+    "s3eventlistenerServiceRoleDefaultPolicy4B42F0D4",
+    "s3eventlistenerServiceRoleED79F812"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/s3-event-listener/Resource",
+    "aws:asset:path": "asset.d504cdcdb114fca5d11981347d38a84b9a929fd86649e8d1c4f2ae802b3ae322",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource"
+   }
+  },
+  "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "s3:GetBucketNotification",
+        "s3:PutBucketNotification"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36",
+    "Roles": [
+     {
+      "Ref": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource"
+   }
+  },
+  "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Description": "AWS CloudFormation handler for \"Custom::S3BucketNotifications\" resources (@aws-cdk/aws-s3)",
+    "Code": {
+     "ZipFile": "import boto3  # type: ignore\nimport json\nimport logging\nimport urllib.request\n\ns3 = boto3.client(\"s3\")\n\nEVENTBRIDGE_CONFIGURATION = 'EventBridgeConfiguration'\n\nCONFIGURATION_TYPES = [\"TopicConfigurations\", \"QueueConfigurations\", \"LambdaFunctionConfigurations\"]\n\ndef handler(event: dict, context):\n  response_status = \"SUCCESS\"\n  error_message = \"\"\n  try:\n    props = event[\"ResourceProperties\"]\n    bucket = props[\"BucketName\"]\n    notification_configuration = props[\"NotificationConfiguration\"]\n    request_type = event[\"RequestType\"]\n    managed = props.get('Managed', 'true').lower() == 'true'\n    stack_id = event['StackId']\n\n    if managed:\n      config = handle_managed(request_type, notification_configuration)\n    else:\n      config = handle_unmanaged(bucket, stack_id, request_type, notification_configuration)\n\n    put_bucket_notification_configuration(bucket, config)\n  except Exception as e:\n    logging.exception(\"Failed to put bucket notification configuration\")\n    response_status = \"FAILED\"\n    error_message = f\"Error: {str(e)}. \"\n  finally:\n    submit_response(event, context, response_status, error_message)\n\ndef handle_managed(request_type, notification_configuration):\n  if request_type == 'Delete':\n    return {}\n  return notification_configuration\n\ndef handle_unmanaged(bucket, stack_id, request_type, notification_configuration):\n  external_notifications = find_external_notifications(bucket, stack_id)\n\n  if request_type == 'Delete':\n    return external_notifications\n\n  def with_id(notification):\n    notification['Id'] = f\"{stack_id}-{hash(json.dumps(notification, sort_keys=True))}\"\n    return notification\n\n  notifications = {}\n  for t in CONFIGURATION_TYPES:\n    external = external_notifications.get(t, [])\n    incoming = [with_id(n) for n in notification_configuration.get(t, [])]\n    notifications[t] = external + incoming\n\n  if EVENTBRIDGE_CONFIGURATION in notification_configuration:\n    notifications[EVENTBRIDGE_CONFIGURATION] = notification_configuration[EVENTBRIDGE_CONFIGURATION]\n  elif EVENTBRIDGE_CONFIGURATION in external_notifications:\n    notifications[EVENTBRIDGE_CONFIGURATION] = external_notifications[EVENTBRIDGE_CONFIGURATION]\n\n  return notifications\n\ndef find_external_notifications(bucket, stack_id):\n  existing_notifications = get_bucket_notification_configuration(bucket)\n  external_notifications = {}\n  for t in CONFIGURATION_TYPES:\n    external_notifications[t] = [n for n in existing_notifications.get(t, []) if not n['Id'].startswith(f\"{stack_id}-\")]\n\n  if EVENTBRIDGE_CONFIGURATION in existing_notifications:\n    external_notifications[EVENTBRIDGE_CONFIGURATION] = existing_notifications[EVENTBRIDGE_CONFIGURATION]\n\n  return external_notifications\n\ndef get_bucket_notification_configuration(bucket):\n  return s3.get_bucket_notification_configuration(Bucket=bucket)\n\ndef put_bucket_notification_configuration(bucket, notification_configuration):\n  s3.put_bucket_notification_configuration(Bucket=bucket, NotificationConfiguration=notification_configuration)\n\ndef submit_response(event: dict, context, response_status: str, error_message: str):\n  response_body = json.dumps(\n    {\n      \"Status\": response_status,\n      \"Reason\": f\"{error_message}See the details in CloudWatch Log Stream: {context.log_stream_name}\",\n      \"PhysicalResourceId\": event.get(\"PhysicalResourceId\") or event[\"LogicalResourceId\"],\n      \"StackId\": event[\"StackId\"],\n      \"RequestId\": event[\"RequestId\"],\n      \"LogicalResourceId\": event[\"LogicalResourceId\"],\n      \"NoEcho\": False,\n    }\n  ).encode(\"utf-8\")\n  headers = {\"content-type\": \"\", \"content-length\": str(len(response_body))}\n  try:\n    req = urllib.request.Request(url=event[\"ResponseURL\"], headers=headers, data=response_body, method=\"PUT\")\n    with urllib.request.urlopen(req) as response:\n      print(response.read().decode(\"utf-8\"))\n    print(\"Status code: \" + response.reason)\n  except Exception as e:\n      print(\"send(..) failed executing request.urlopen(..): \" + str(e))\n"
+    },
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.7",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36",
+    "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQTU/DMAyGf8vuqWEF7d6BuPGhwb1yE1PSNklVJ0xV1f9O0jAxTu/j144/UkJ5gNsdnrmQqi8G3cDy7lH2Ilr1omaLxqlofmAzkHj4tBusAkfdoqczzrCciH016pS9wkpKF6wXjzQObjYUMbpXUZzTbi0zxKcuTJKOyH/Bb8/Mz+S/nEpWplVoNHG8y5tt+uYGLecUZlrFgKZRCEuyaDKaWTubCp6ClT7ypaS2TlHH8LLJJSv4rkZm8gxVkhjDMciefFp0/bfpa/Bj8GKrS0dp214fsIo0ATq++d4fYH8P5a5jrYspfpM2BKesP+thjL+UAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "FederatedLearningStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "flapiEndpoint3302A41E": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "flapiB2127466"
+      },
+      ".execute-api.ap-northeast-2.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "flapiDeploymentStageprodF6A989F9"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

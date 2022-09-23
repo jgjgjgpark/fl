@@ -1,0 +1,76 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "2022-07-14T07:05:40Z",
+    "title" : "fl-api"
+  },
+  "host" : "mip6wd535i.execute-api.ap-northeast-2.amazonaws.com",
+  "basePath" : "/prod",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/analyses" : {
+      "post" : {
+        "responses" : { }
+      }
+    },
+    "/analyses/{analysisId}/executions" : {
+      "post" : {
+        "parameters" : [ {
+          "name" : "analysisId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : { }
+      }
+    },
+    "/analyses/{analysisId}/predefined_url" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "round",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "analysisId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : { }
+      }
+    },
+    "/analyses/{analysisId}/rounds/{round}" : {
+      "put" : {
+        "parameters" : [ {
+          "name" : "analysisId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "round",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : { }
+      }
+    },
+    "/organizations" : {
+      "get" : {
+        "responses" : { }
+      }
+    },
+    "/organizations/{orgId}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "orgId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : { }
+      }
+    }
+  }
+}

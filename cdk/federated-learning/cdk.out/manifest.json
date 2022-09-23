@@ -1,0 +1,592 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "FederatedLearningStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FederatedLearningStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FederatedLearningStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/ap-northeast-2",
+      "properties": {
+        "templateFile": "FederatedLearningStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-ap-northeast-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-ap-northeast-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-2/0cc6eb55c7c38f7252b43a44b8121141d41ff0cea807787d2d8019698915c5f7.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FederatedLearningStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-ap-northeast-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        },
+        "stackName": "FederatedLearning"
+      },
+      "dependencies": [
+        "FederatedLearningStack.assets"
+      ],
+      "metadata": {
+        "/FederatedLearningStack/federated-learning-table": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "federatedlearningtable3D56D623"
+            }
+          }
+        ],
+        "/FederatedLearningStack/federated-learning-table/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "federatedlearningtable3D56D623"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiB2127466"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiCloudWatchRoleB0C6D8EA"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiAccountEFD6CCC9"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiDeploymentC545BF66a6d9fa25b4fd6d3ee5725da8e79f0fb5"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiDeploymentStageprodF6A989F9"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiEndpoint3302A41E"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizations18C45D86"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..organizations": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsGETApiPermissionFederatedLearningStackflapiB15B2DA1GETorganizations30D31B9D"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..organizations": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETorganizationsD8A7657C"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsGET5617CCFA"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/{orgId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsorgIdD0720241"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..organizations.{orgId}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsorgIdGETApiPermissionFederatedLearningStackflapiB15B2DA1GETorganizationsorgId2064A4F5"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..organizations.{orgId}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsorgIdGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETorganizationsorgId0B22B3C1"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/organizations/{orgId}/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapiorganizationsorgIdGET79C03B3F"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesB438150A"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/POST/ApiPermission.FederatedLearningStackflapiB15B2DA1.POST..analyses": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesPOSTApiPermissionFederatedLearningStackflapiB15B2DA1POSTanalyses1D765F91"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/POST/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.POST..analyses": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesPOSTApiPermissionTestFederatedLearningStackflapiB15B2DA1POSTanalyses4065595C"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesPOSTE1F56FB0"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdCEACF21F"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdpredefinedurl99AA55EF"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..analyses.{analysisId}.predefined_url": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdpredefinedurlGETApiPermissionFederatedLearningStackflapiB15B2DA1GETanalysesanalysisIdpredefinedurl5620E38A"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..analyses.{analysisId}.predefined_url": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdpredefinedurlGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETanalysesanalysisIdpredefinedurl26EDE781"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/predefined_url/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdpredefinedurlGETDE57AD70"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdroundsD7E5C413"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdroundsround4EFD3528"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/ApiPermission.FederatedLearningStackflapiB15B2DA1.PUT..analyses.{analysisId}.rounds.{round}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdroundsroundPUTApiPermissionFederatedLearningStackflapiB15B2DA1PUTanalysesanalysisIdroundsround93069E04"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.PUT..analyses.{analysisId}.rounds.{round}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdroundsroundPUTApiPermissionTestFederatedLearningStackflapiB15B2DA1PUTanalysesanalysisIdroundsround95EC59C6"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/analyses/{analysisId}/rounds/{round}/PUT/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapianalysesanalysisIdroundsroundPUTF3EC6EA7"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/cdms/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapicdmsEE861973"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/cdms/GET/ApiPermission.FederatedLearningStackflapiB15B2DA1.GET..cdms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapicdmsGETApiPermissionFederatedLearningStackflapiB15B2DA1GETcdms5E89CB85"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/cdms/GET/ApiPermission.Test.FederatedLearningStackflapiB15B2DA1.GET..cdms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapicdmsGETApiPermissionTestFederatedLearningStackflapiB15B2DA1GETcdms7DC7AC44"
+          }
+        ],
+        "/FederatedLearningStack/fl-api/Default/cdms/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "flapicdmsGETD427C0AA"
+          }
+        ],
+        "/FederatedLearningStack/organization-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "organizationlambdaServiceRoleC50F2A42"
+          }
+        ],
+        "/FederatedLearningStack/organization-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "organizationlambdaServiceRoleDefaultPolicy6FA351E4"
+          }
+        ],
+        "/FederatedLearningStack/organization-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "organizationlambdaBFBF175B"
+          }
+        ],
+        "/FederatedLearningStack/analysis-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "analysislambdaServiceRoleE208A9BA"
+          }
+        ],
+        "/FederatedLearningStack/analysis-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "analysislambdaServiceRoleDefaultPolicy77FC80C2"
+          }
+        ],
+        "/FederatedLearningStack/analysis-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "analysislambdaDFBB211D"
+          }
+        ],
+        "/FederatedLearningStack/s3-full-access-put/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3fullaccessput0C9B7416"
+          }
+        ],
+        "/FederatedLearningStack/presigned-url-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "presignedurllambdaServiceRole74B1D395"
+          }
+        ],
+        "/FederatedLearningStack/presigned-url-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "presignedurllambdaServiceRoleDefaultPolicyC8BC02DF"
+          }
+        ],
+        "/FederatedLearningStack/presigned-url-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "presignedurllambdaD5DC181C"
+          }
+        ],
+        "/FederatedLearningStack/s3-full-access-get/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3fullaccessgetBD53ED95"
+          }
+        ],
+        "/FederatedLearningStack/execution-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "executionlambdaServiceRoleA10C6C39"
+          }
+        ],
+        "/FederatedLearningStack/execution-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "executionlambdaServiceRoleDefaultPolicy9184FFD3"
+          }
+        ],
+        "/FederatedLearningStack/execution-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "executionlambda813DBCF9"
+          }
+        ],
+        "/FederatedLearningStack/cdm-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "cdmlambdaServiceRole22DFE8C1"
+          }
+        ],
+        "/FederatedLearningStack/cdm-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "cdmlambdaServiceRoleDefaultPolicyA330A82A"
+          }
+        ],
+        "/FederatedLearningStack/cdm-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "cdmlambdaC139B89A"
+          }
+        ],
+        "/FederatedLearningStack/federated-learning-bucket/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "federatedlearningbucketNotifications7D035EFA"
+          }
+        ],
+        "/FederatedLearningStack/federated-learning-bucket/AllowBucketNotificationsToFederatedLearningStacks3eventlistener92C454F9": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "federatedlearningbucketAllowBucketNotificationsToFederatedLearningStacks3eventlistener92C454F9BAA26EB5"
+          }
+        ],
+        "/FederatedLearningStack/s3-event-listener/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3eventlistenerServiceRoleED79F812"
+          }
+        ],
+        "/FederatedLearningStack/s3-event-listener/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3eventlistenerServiceRoleDefaultPolicy4B42F0D4"
+          }
+        ],
+        "/FederatedLearningStack/s3-event-listener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3eventlistenerB5A05938"
+          }
+        ],
+        "/FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/FederatedLearningStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/FederatedLearningStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FederatedLearningStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FederatedLearningStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FederatedLearningStack"
+    },
+    "Organization1Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "Organization1Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "Organization1Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "Organization1Stack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/46c3fdaf1e83f9edca454a30ae4ed79fe115901af279b03ca8fcf17e790cc644.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "Organization1Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        },
+        "stackName": "Organization1"
+      },
+      "dependencies": [
+        "Organization1Stack.assets"
+      ],
+      "metadata": {
+        "/Organization1Stack/tableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "tableName"
+          }
+        ],
+        "/Organization1Stack/dragons": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "dragons93882F29"
+            }
+          }
+        ],
+        "/Organization1Stack/dragons/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dragons93882F29"
+          }
+        ],
+        "/Organization1Stack/arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "arn"
+          }
+        ],
+        "/Organization1Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/Organization1Stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/Organization1Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/Organization1Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "Organization1Stack"
+    },
+    "DynamodbStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "DynamodbStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "DynamodbStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "DynamodbStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/5105e412dfd3b9a2259173adf84ffa7acd0c4f0beb592b357b82d1a364632b31.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "DynamodbStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "DynamodbStack.assets"
+      ],
+      "metadata": {
+        "/DynamodbStack/tableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "tableName"
+          }
+        ],
+        "/DynamodbStack/dragons": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "dragons93882F29"
+            }
+          }
+        ],
+        "/DynamodbStack/dragons/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dragons93882F29"
+          }
+        ],
+        "/DynamodbStack/arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "arn"
+          }
+        ],
+        "/DynamodbStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/DynamodbStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/DynamodbStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/DynamodbStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "DynamodbStack"
+    }
+  }
+}
